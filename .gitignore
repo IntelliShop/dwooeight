@@ -10,3 +10,6 @@ composer.lock
 ### PHPUnit Tests
 /tests/temp/cache/
 /tests/temp/compiled/
+
+### Ignore IDE
+.idea
