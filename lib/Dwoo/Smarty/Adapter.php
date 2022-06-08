@@ -246,7 +246,16 @@ class Adapter extends Core
 
         if ($this->security) {
             $policy = new SecurityPolicy();
+
+            if(is_array($this->security_settings['IF_FUNCS'])){
+                $this->security_settings['IF_FUNCS'] = [];
+            }
+            if(is_array($this->security_settings['MODIFIER_FUNCS'])){
+                $this->security_settings['MODIFIER_FUNCS'] = [];
+            }
+
             $policy->addPhpFunction(array_merge($this->security_settings['IF_FUNCS'], $this->security_settings['MODIFIER_FUNCS']));
+
 
             $phpTags = $this->security_settings['PHP_HANDLING'] ? SMARTY_PHP_ALLOW : $this->php_handling;
             if ($this->security_settings['PHP_TAGS']) {

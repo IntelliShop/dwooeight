@@ -144,22 +144,6 @@ aaa
             $this->assertEquals(" \naaa\n ", $this->dwoo->get($tpl, array()));
         }
 
-        public function testNestedDynamicTags()
-        {
-            $tpl = new TemplateString('
-        {dynamic}
-        {dynamic}
-        {foreach $foo member}
-        {/foreach}
-        {/dynamic}
-        {/dynamic}
-        ');
-
-            $tpl->forceCompilation();
-
-            $this->dwoo->get($tpl, array());
-        }
-
         public function testDoubleEscapingOnAssignments()
         {
             $tpl = new TemplateString('{$bar = $foo}{$foo}{$bar}');

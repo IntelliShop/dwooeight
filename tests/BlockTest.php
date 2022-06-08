@@ -107,11 +107,10 @@ namespace Dwoo\Tests
             $fixCall->init('');
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testAutoEscapeWrongParam()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{$foo}{auto_escape slkfjsl}{$foo}{/}');
             $tpl->forceCompilation();
 
@@ -292,14 +291,6 @@ Root Footer
         public function testIfVariation3()
         {
             $tpl = new TemplateString('{if 5%2==1 && !isset($foo)}true{/if}');
-            $tpl->forceCompilation();
-
-            $this->assertEquals('true', $this->dwoo->get($tpl, array(), $this->compiler));
-        }
-
-        public function testIfVariation4()
-        {
-            $tpl = new TemplateString('{if 5 is not div by 2 && 4 is div by 2 && 6 is even && 6 is not even by 5 && (3 is odd && 9 is odd by 3)}true{/if}');
             $tpl->forceCompilation();
 
             $this->assertEquals('true', $this->dwoo->get($tpl, array(), $this->compiler));

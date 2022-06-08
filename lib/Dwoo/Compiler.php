@@ -242,11 +242,11 @@ class Compiler implements ICompiler
      * @var int
      */
     const T_UNQUOTED_STRING = 1;
-    const T_NUMERIC         = 2;
-    const T_NULL            = 4;
-    const T_BOOL            = 8;
-    const T_MATH            = 16;
-    const T_BREAKCHAR       = 32;
+    const T_NUMERIC = 2;
+    const T_NULL = 4;
+    const T_BOOL = 8;
+    const T_MATH = 16;
+    const T_BREAKCHAR = 32;
 
     /**
      * Compiler constructor.
@@ -263,13 +263,13 @@ class Compiler implements ICompiler
      * make it very hard to work with templates or might even break the compiler entirely : "\", "$", "|", ":" and
      * finally "#" only if you intend to use config-vars with the #var# syntax.
      *
-     * @param string $left  left delimiter
+     * @param string $left left delimiter
      * @param string $right right delimiter
      */
     public function setDelimiters($left, $right)
     {
-        $this->ld  = $left;
-        $this->rd  = $right;
+        $this->ld = $left;
+        $this->rd = $right;
         $this->ldr = preg_quote($left, '/');
         $this->rdr = preg_quote($right, '/');
     }
@@ -300,8 +300,8 @@ class Compiler implements ICompiler
     /**
      * Returns the nested comments handling setting.
      *
-     * @see    setNestedCommentsHandling
      * @return bool true if nested comments are allowed
+     * @see    setNestedCommentsHandling
      */
     public function getNestedCommentsHandling()
     {
@@ -325,8 +325,8 @@ class Compiler implements ICompiler
     /**
      * Returns the tag openings handling strictness setting.
      *
-     * @see    setLooseOpeningHandling
      * @return bool true if loose tags are allowed
+     * @see    setLooseOpeningHandling
      */
     public function getLooseOpeningHandling()
     {
@@ -364,13 +364,13 @@ class Compiler implements ICompiler
      *
      * @param mixed $callback either a valid callback to the preprocessor or a simple name if the autoload is set to
      *                        true
-     * @param bool  $autoload if set to true, the preprocessor is auto-loaded from one of the plugin directories, else
+     * @param bool $autoload if set to true, the preprocessor is auto-loaded from one of the plugin directories, else
      *                        you must provide a valid callback
      */
     public function addPreProcessor($callback, $autoload = false)
     {
         if ($autoload) {
-            $name  = str_replace(Core::NAMESPACE_PLUGINS_PROCESSORS, '', Core::toCamelCase($callback));
+            $name = str_replace(Core::NAMESPACE_PLUGINS_PROCESSORS, '', Core::toCamelCase($callback));
             $class = Core::NAMESPACE_PLUGINS_PROCESSORS . $name;
 
             if (class_exists($class)) {
@@ -417,13 +417,13 @@ class Compiler implements ICompiler
      *
      * @param mixed $callback either a valid callback to the postprocessor or a simple name if the autoload is set to
      *                        true
-     * @param bool  $autoload if set to true, the postprocessor is auto-loaded from one of the plugin directories, else
+     * @param bool $autoload if set to true, the postprocessor is auto-loaded from one of the plugin directories, else
      *                        you must provide a valid callback
      */
     public function addPostProcessor($callback, $autoload = false)
     {
         if ($autoload) {
-            $name  = str_replace(Core::NAMESPACE_PLUGINS_PROCESSORS, '', $callback);
+            $name = str_replace(Core::NAMESPACE_PLUGINS_PROCESSORS, '', $callback);
             $class = Core::NAMESPACE_PLUGINS_PROCESSORS . Core::toCamelCase($name);
 
             if (class_exists($class)) {
@@ -468,7 +468,7 @@ class Compiler implements ICompiler
      * Internal function to autoload processors at runtime if required.
      *
      * @param string $class the class/function name
-     * @param string $name  the plugin name (without Dwoo_Plugin_ prefix)
+     * @param string $name the plugin name (without Dwoo_Plugin_ prefix)
      *
      * @return array|string
      * @throws Exception
@@ -478,8 +478,7 @@ class Compiler implements ICompiler
         if (!class_exists($class) && !function_exists($class)) {
             try {
                 $this->getCore()->getLoader()->loadPlugin($name);
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 throw new Exception('Processor ' . $name . ' could not be found in your plugin directories, please ensure it is in a file named ' . $name . '.php in the plugin directory');
             }
         }
@@ -503,7 +502,7 @@ class Compiler implements ICompiler
      * @private
      *
      * @param string $name function name
-     * @param int    $type plugin type (Core::*_PLUGIN)
+     * @param int $type plugin type (Core::*_PLUGIN)
      */
     public function addUsedPlugin($name, $type)
     {
@@ -529,10 +528,10 @@ class Compiler implements ICompiler
      *
      * @private
      *
-     * @param string $name   function name
-     * @param array  $params parameter array to help validate the function call
-     * @param string $uuid   unique id of the function
-     * @param string $body   function php code
+     * @param string $name function name
+     * @param array $params parameter array to help validate the function call
+     * @param string $uuid unique id of the function
+     * @param string $body function php code
      */
     public function addTemplatePlugin($name, array $params, $uuid, $body = null)
     {
@@ -563,9 +562,9 @@ class Compiler implements ICompiler
     /**
      * Adds the custom plugins loaded into Dwoo to the compiler so it can load them.
      *
+     * @param array $customPlugins an array of custom plugins
      * @see Core::addPlugin
      *
-     * @param array $customPlugins an array of custom plugins
      */
     public function setCustomPlugins(array $customPlugins)
     {
@@ -597,7 +596,7 @@ class Compiler implements ICompiler
     /**
      * Sets the pointer position.
      *
-     * @param int  $position the new pointer position
+     * @param int $position the new pointer position
      * @param bool $isOffset if set to true, the position acts as an offset and not an absolute position
      */
     public function setPointer($position, $isOffset = false)
@@ -622,7 +621,7 @@ class Compiler implements ICompiler
     /**
      * Sets the line number.
      *
-     * @param int  $number   the new line number
+     * @param int $number the new line number
      * @param bool $isOffset if set to true, the position acts as an offset and not an absolute position
      */
     public function setLine($number, $isOffset = false)
@@ -658,8 +657,8 @@ class Compiler implements ICompiler
     /**
      * Overwrites the template that is being compiled.
      *
-     * @param string $newSource   the template source that must replace the current one
-     * @param bool   $fromPointer if set to true, only the source from the current pointer position is replaced
+     * @param string $newSource the template source that must replace the current one
+     * @param bool $fromPointer if set to true, only the source from the current pointer position is replaced
      *
      * @return void
      */
@@ -703,7 +702,7 @@ class Compiler implements ICompiler
     /**
      * Compiles the provided string down to php code.
      *
-     * @param Core      $core
+     * @param Core $core
      * @param ITemplate $template the template to compile
      *
      * @return string a compiled php string
@@ -713,26 +712,26 @@ class Compiler implements ICompiler
     {
         // init vars
         //		$compiled = '';
-        $tpl                  = $template->getSource();
-        $ptr                  = 0;
-        $this->core           = $core;
-        $this->template       = $template;
+        $tpl = $template->getSource();
+        $ptr = 0;
+        $this->core = $core;
+        $this->template = $template;
         $this->templateSource = &$tpl;
-        $this->pointer        = &$ptr;
+        $this->pointer = &$ptr;
 
         while (true) {
             // if pointer is at the beginning, reset everything, that allows a plugin to externally reset the compiler if everything must be reparsed
             if ($ptr === 0) {
                 // resets variables
-                $this->usedPlugins     = array();
-                $this->data            = array();
-                $this->scope           = &$this->data;
-                $this->scopeTree       = array();
-                $this->stack           = array();
-                $this->line            = 1;
+                $this->usedPlugins = array();
+                $this->data = array();
+                $this->scope = &$this->data;
+                $this->scopeTree = array();
+                $this->stack = array();
+                $this->line = 1;
                 $this->templatePlugins = array();
                 // add top level block
-                $compiled                 = $this->addBlock('TopLevelBlock', array(), 0);
+                $compiled = $this->addBlock('TopLevelBlock', array(), 0);
                 $this->stack[0]['buffer'] = '';
 
                 if ($this->debug) {
@@ -759,7 +758,7 @@ class Compiler implements ICompiler
 
                 // show template source if debug
                 if ($this->debug) {
-                    echo '<pre>'.print_r(htmlentities($tpl), true).'</pre>'."\n";
+                    echo '<pre>' . print_r(htmlentities($tpl), true) . '</pre>' . "\n";
                 }
 
                 // strips php tags if required by the security policy
@@ -878,42 +877,42 @@ class Compiler implements ICompiler
                 case Core::CLASS_PLUGIN:
                 case Core::CLASS_PLUGIN + Core::BLOCK_PLUGIN:
                     if (class_exists('Plugin' . $plugin) !== false) {
-                        $output .= "if (class_exists('" . "Plugin" . $plugin . "')===false)".
-                        "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
+                        $output .= "if (class_exists('" . "Plugin" . $plugin . "')===false)" .
+                            "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     } else {
-                        $output .= "if (class_exists('" . Core::NAMESPACE_PLUGINS_BLOCKS . "Plugin" . $plugin . "')===false)".
-                        "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
+                        $output .= "if (class_exists('" . Core::NAMESPACE_PLUGINS_BLOCKS . "Plugin" . $plugin . "')===false)" .
+                            "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     }
                     break;
                 case Core::CLASS_PLUGIN + Core::FUNC_PLUGIN:
                     if (class_exists('Plugin' . $plugin) !== false) {
-                        $output .= "if (class_exists('" . "Plugin" . $plugin . "')===false)".
+                        $output .= "if (class_exists('" . "Plugin" . $plugin . "')===false)" .
                             "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     } else {
-                        $output .= "if (class_exists('" . Core::NAMESPACE_PLUGINS_FUNCTIONS . "Plugin" . $plugin . "')===false)".
+                        $output .= "if (class_exists('" . Core::NAMESPACE_PLUGINS_FUNCTIONS . "Plugin" . $plugin . "')===false)" .
                             "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     }
                     break;
                 case Core::FUNC_PLUGIN:
                     if (function_exists('Plugin' . $plugin) !== false) {
-                        $output .= "if (function_exists('" . "Plugin" . $plugin . "')===false)".
-                        "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
+                        $output .= "if (function_exists('" . "Plugin" . $plugin . "')===false)" .
+                            "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     } else {
-                        $output .= "if (function_exists('" . Core::NAMESPACE_PLUGINS_FUNCTIONS . "Plugin" . $plugin . "')===false)".
-                        "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
+                        $output .= "if (function_exists('" . Core::NAMESPACE_PLUGINS_FUNCTIONS . "Plugin" . $plugin . "')===false)" .
+                            "\n\t\$this->getLoader()->loadPlugin('Plugin$plugin');\n";
                     }
                     break;
                 case Core::SMARTY_MODIFIER:
-                    $output .= "if (function_exists('smarty_modifier_$plugin')===false)".
-                    "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
+                    $output .= "if (function_exists('smarty_modifier_$plugin')===false)" .
+                        "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
                     break;
                 case Core::SMARTY_FUNCTION:
-                    $output .= "if (function_exists('smarty_function_$plugin')===false)".
-                    "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
+                    $output .= "if (function_exists('smarty_function_$plugin')===false)" .
+                        "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
                     break;
                 case Core::SMARTY_BLOCK:
-                    $output .= "if (function_exists('smarty_block_$plugin')===false)".
-                    "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
+                    $output .= "if (function_exists('smarty_block_$plugin')===false)" .
+                        "\n\t\$this->getLoader()->loadPlugin('$plugin');\n";
                     break;
                 case Core::PROXY_PLUGIN:
                     $output .= $this->getCore()->getPluginProxy()->getLoader($plugin);
@@ -957,7 +956,7 @@ class Compiler implements ICompiler
         }
 
         $this->template = $this->dwoo = null;
-        $tpl            = null;
+        $tpl = null;
 
         return $output;
     }
@@ -976,7 +975,7 @@ class Compiler implements ICompiler
         $body = $this->templatePlugins[$function]['body'];
         foreach ($this->templatePlugins as $func => $attr) {
             if ($func !== $function && !isset($attr['called']) && strpos($body, Core::NAMESPACE_PLUGINS_FUNCTIONS .
-            'Plugin' . Core::toCamelCase($func)) !== false) {
+                    'Plugin' . Core::toCamelCase($func)) !== false) {
                 $this->templatePlugins[$func]['called'] = true;
                 $this->resolveSubTemplateDependencies($func);
             }
@@ -987,8 +986,8 @@ class Compiler implements ICompiler
     /**
      * Adds compiled content to the current block.
      *
-     * @param string $content   the content to push
-     * @param int    $lineCount newlines count in content, optional
+     * @param string $content the content to push
+     * @param int $lineCount newlines count in content, optional
      *
      * @throws CompilationException
      */
@@ -1017,8 +1016,8 @@ class Compiler implements ICompiler
      * set to null if the scope becomes "unstable" (i.e. too variable or unknown) so that
      * variables are compiled in a more evaluative way than just $this->scope['key']
      *
-     * @param mixed $scope    a string i.e. "level1.level2" or an array i.e. array("level1", "level2")
-     * @param bool  $absolute if true, the scope is set from the top level scope and not from the current scope
+     * @param mixed $scope a string i.e. "level1.level2" or an array i.e. array("level1", "level2")
+     * @param bool $absolute if true, the scope is set from the top level scope and not from the current scope
      *
      * @return array the current scope tree
      */
@@ -1036,7 +1035,7 @@ class Compiler implements ICompiler
         }
 
         if ($absolute === true) {
-            $this->scope     = &$this->data;
+            $this->scope = &$this->data;
             $this->scopeTree = array();
         }
 
@@ -1045,19 +1044,19 @@ class Compiler implements ICompiler
                 array_pop($this->scopeTree);
                 reset($this->scopeTree);
                 $this->scope = &$this->data;
-                $cnt         = count($this->scopeTree);
-                for ($i = 0; $i < $cnt; ++ $i) {
+                $cnt = count($this->scopeTree);
+                for ($i = 0; $i < $cnt; ++$i) {
                     $this->scope = &$this->scope[$this->scopeTree[$i]];
                 }
             } elseif ($bit === '_root' || $bit === '__') {
-                $this->scope     = &$this->data;
+                $this->scope = &$this->data;
                 $this->scopeTree = array();
             } elseif (isset($this->scope[$bit])) {
-                $this->scope       = &$this->scope[$bit];
+                $this->scope = &$this->scope[$bit];
                 $this->scopeTree[] = $bit;
             } else {
                 $this->scope[$bit] = array();
-                $this->scope       = &$this->scope[$bit];
+                $this->scope = &$this->scope[$bit];
                 $this->scopeTree[] = $bit;
             }
         }
@@ -1068,9 +1067,9 @@ class Compiler implements ICompiler
     /**
      * Adds a block to the top of the block stack.
      *
-     * @param string $type      block type (name)
-     * @param array  $params    the parameters array
-     * @param int    $paramtype the parameters type (see mapParams), 0, 1 or 2
+     * @param string $type block type (name)
+     * @param array $params the parameters array
+     * @param int $paramtype the parameters type (see mapParams), 0, 1 or 2
      *
      * @return string the preProcessing() method's output
      */
@@ -1089,11 +1088,11 @@ class Compiler implements ICompiler
         }
         $params = $this->mapParams($params, array($class, 'init'), $paramtype);
 
-        $this->stack[]  = array(
-            'type'   => $type,
+        $this->stack[] = array(
+            'type' => $type,
             'params' => $params,
             'custom' => false,
-            'class'  => $class,
+            'class' => $class,
             'buffer' => null
         );
         $this->curBlock = &$this->stack[count($this->stack) - 1];
@@ -1104,9 +1103,9 @@ class Compiler implements ICompiler
     /**
      * Adds a custom block to the top of the block stack.
      *
-     * @param string $type      block type (name)
-     * @param array  $params    the parameters array
-     * @param int    $paramtype the parameters type (see mapParams), 0, 1 or 2
+     * @param string $type block type (name)
+     * @param array $params the parameters array
+     * @param int $paramtype the parameters type (see mapParams), 0, 1 or 2
      *
      * @return string the preProcessing() method's output
      */
@@ -1121,11 +1120,11 @@ class Compiler implements ICompiler
 
         $params = $this->mapParams($params, array($class, 'init'), $paramtype);
 
-        $this->stack[]  = array(
-            'type'   => $type,
+        $this->stack[] = array(
+            'type' => $type,
             'params' => $params,
             'custom' => true,
-            'class'  => $class,
+            'class' => $class,
             'buffer' => null
         );
         $this->curBlock = &$this->stack[count($this->stack) - 1];
@@ -1137,8 +1136,8 @@ class Compiler implements ICompiler
      * Injects a block at the top of the plugin stack without calling its preProcessing method.
      * used by {else} blocks to re-add themselves after having closed everything up to their parent
      *
-     * @param string $type   block type (name)
-     * @param array  $params parameters array
+     * @param string $type block type (name)
+     * @param array $params parameters array
      */
     public function injectBlock($type, array $params)
     {
@@ -1150,11 +1149,11 @@ class Compiler implements ICompiler
         if (class_exists($class) === false) {
             $this->getCore()->getLoader()->loadPlugin($type);
         }
-        $this->stack[]  = array(
-            'type'   => $type,
+        $this->stack[] = array(
+            'type' => $type,
             'params' => $params,
             'custom' => false,
-            'class'  => $class,
+            'class' => $class,
             'buffer' => null
         );
         $this->curBlock = &$this->stack[count($this->stack) - 1];
@@ -1198,12 +1197,12 @@ class Compiler implements ICompiler
                         'postProcessing'
                     ), $this, $top['params'], '', '', $top['buffer']), 0);
                 } else {
-                    $null           = null;
+                    $null = null;
                     $this->curBlock = &$null;
-                    $output         = call_user_func(
+                    $output = call_user_func(
                         array(
-                        $class,
-                        'postProcessing'
+                            $class,
+                            'postProcessing'
                         ), $this, $top['params'], '', '', $top['buffer']
                     );
                 }
@@ -1225,8 +1224,8 @@ class Compiler implements ICompiler
      * this is mainly used by {else} plugins to close everything that was opened
      * between their parent and themselves.
      *
-     * @param string $type       the block type (name)
-     * @param bool   $closeAlong whether to close all blocks encountered while going down the block stack or not
+     * @param string $type the block type (name)
+     * @param bool $closeAlong whether to close all blocks encountered while going down the block stack or not
      *
      * @return mixed &array the array is as such: array('type'=>pluginName, 'params'=>parameter array,
      *               'custom'=>bool defining whether it's a custom plugin or not, for internal use)
@@ -1351,13 +1350,13 @@ class Compiler implements ICompiler
     /**
      * Entry point of the parser, it redirects calls to other parse* functions.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -1388,9 +1387,9 @@ class Compiler implements ICompiler
 
                 return false;
             }
-            ++ $from;
+            ++$from;
             if ($pointer !== null) {
-                ++ $pointer;
+                ++$pointer;
             }
             if ($from >= $to) {
                 if (is_array($parsingParams)) {
@@ -1410,19 +1409,18 @@ class Compiler implements ICompiler
         $parsed = '';
 
         if ($curBlock === 'root' && $first === '*') {
-            $src      = $this->getTemplateSource();
+            $src = $this->getTemplateSource();
             $startpos = $this->getPointer() - strlen($this->ld);
             if (substr($src, $startpos, strlen($this->ld)) === $this->ld) {
                 if ($startpos > 0) {
                     do {
-                        $char = substr($src, -- $startpos, 1);
+                        $char = substr($src, --$startpos, 1);
                         if ($char == "\n") {
-                            ++ $startpos;
+                            ++$startpos;
                             $whitespaceStart = true;
                             break;
                         }
-                    }
-                    while ($startpos > 0 && ($char == ' ' || $char == "\t"));
+                    } while ($startpos > 0 && ($char == ' ' || $char == "\t"));
                 }
 
                 if (!isset($whitespaceStart)) {
@@ -1432,29 +1430,29 @@ class Compiler implements ICompiler
                 }
 
                 if ($this->allowNestedComments && strpos($src, $this->ld . '*', $this->getPointer()) !== false) {
-                    $comOpen  = $this->ld . '*';
+                    $comOpen = $this->ld . '*';
                     $comClose = '*' . $this->rd;
-                    $level    = 1;
-                    $ptr      = $this->getPointer();
+                    $level = 1;
+                    $ptr = $this->getPointer();
 
                     while ($level > 0 && $ptr < strlen($src)) {
-                        $open  = strpos($src, $comOpen, $ptr);
+                        $open = strpos($src, $comOpen, $ptr);
                         $close = strpos($src, $comClose, $ptr);
 
                         if ($open !== false && $close !== false) {
                             if ($open < $close) {
                                 $ptr = $open + strlen($comOpen);
-                                ++ $level;
+                                ++$level;
                             } else {
                                 $ptr = $close + strlen($comClose);
-                                -- $level;
+                                --$level;
                             }
                         } elseif ($open !== false) {
                             $ptr = $open + strlen($comOpen);
-                            ++ $level;
+                            ++$level;
                         } elseif ($close !== false) {
                             $ptr = $close + strlen($comClose);
-                            -- $level;
+                            --$level;
                         } else {
                             $ptr = strlen($src);
                         }
@@ -1478,7 +1476,7 @@ class Compiler implements ICompiler
 
         if ($first === '$') {
             // var
-            $out    = $this->parseVar($in, $from, $to, $parsingParams, $curBlock, $pointer);
+            $out = $this->parseVar($in, $from, $to, $parsingParams, $curBlock, $pointer);
             $parsed = 'var';
         } elseif ($first === '%' && preg_match('#^%[a-z_\\\\]#i', $substr)) {
             // Short constant
@@ -1488,7 +1486,7 @@ class Compiler implements ICompiler
             $out = $this->parseString($in, $from, $to, $parsingParams, $curBlock, $pointer);
         } elseif (preg_match('/^\\\\?[a-z_](?:\\\\?[a-z0-9_]+)*(?:::[a-z_][a-z0-9_]*)?(' . (is_array($parsingParams) || $curBlock != 'root' ? '' : '\s+[^(]|') . '\s*\(|\s*' . $this->rdr . '|\s*;)/i', $substr)) {
             // func
-            $out    = $this->parseFunction($in, $from, $to, $parsingParams, $curBlock, $pointer);
+            $out = $this->parseFunction($in, $from, $to, $parsingParams, $curBlock, $pointer);
             $parsed = 'func';
         } elseif ($first === ';') {
             // instruction end
@@ -1496,7 +1494,7 @@ class Compiler implements ICompiler
                 echo 'END OF INSTRUCTION' . "\n";
             }
             if ($pointer !== null) {
-                ++ $pointer;
+                ++$pointer;
             }
 
             return $this->parse($in, $from + 1, $to, false, 'root', $pointer);
@@ -1542,7 +1540,7 @@ class Compiler implements ICompiler
             }
             $len = strlen($match[1]);
             while (substr($in, $from + $len, 1) === ' ') {
-                ++ $len;
+                ++$len;
             }
             if ($pointer !== null) {
                 $pointer += $len;
@@ -1561,7 +1559,7 @@ class Compiler implements ICompiler
             $parsed = 'var';
             if (is_array($parsingParams)) {
                 $parsingParams[] = array($match[1], $match[1]);
-                $out             = $parsingParams;
+                $out = $parsingParams;
             } else {
                 $out = $match[1];
             }
@@ -1576,6 +1574,10 @@ class Compiler implements ICompiler
 
         if (empty($out)) {
             return '';
+        }
+
+        if ($pointer === null) {
+            $pointer = 0;
         }
 
         $substr = substr($in, $pointer, $to - $pointer);
@@ -1619,7 +1621,7 @@ class Compiler implements ICompiler
                     echo 'PARSING POST-VAR ASSIGNMENT ' . $substr . "\n";
                 }
                 // parse assignment
-                $value    = $match[2];
+                $value = $match[2];
                 $operator = trim($match[1]);
                 if (substr($value, 0, 1) == '=') {
                     throw new CompilationException($this, 'Unexpected "=" in <em>' . $substr . '</em>');
@@ -1631,27 +1633,26 @@ class Compiler implements ICompiler
 
                 if ($operator !== '++' && $operator !== '--') {
                     $parts = array();
-                    $ptr   = 0;
+                    $ptr = 0;
                     $parts = $this->parse($value, 0, strlen($value), $parts, 'condition', $ptr);
                     $pointer += $ptr;
 
                     // load if plugin
                     try {
                         $this->getPluginType('if');
-                    }
-                    catch (Exception $e) {
+                    } catch (Exception $e) {
                         throw new CompilationException($this, 'Assignments require the "if" plugin to be accessible');
                     }
 
-                    $parts  = $this->mapParams($parts, array(Core::NAMESPACE_PLUGINS_BLOCKS . 'PluginIf', 'init'), 1);
+                    $parts = $this->mapParams($parts, array(Core::NAMESPACE_PLUGINS_BLOCKS . 'PluginIf', 'init'), 1);
                     $tokens = $this->getParamTokens($parts);
-                    $parts  = $this->getCompiledParams($parts);
+                    $parts = $this->getCompiledParams($parts);
 
                     $value = PluginIf::replaceKeywords($parts['*'], $tokens['*'], $this);
-                    $echo  = '';
+                    $echo = '';
                 } else {
                     $value = array();
-                    $echo  = 'echo ';
+                    $echo = 'echo ';
                 }
 
                 if ($this->autoEscape) {
@@ -1679,12 +1680,12 @@ class Compiler implements ICompiler
             // parse modifier on funcs or vars
             $srcPointer = $pointer;
             if (is_array($parsingParams)) {
-                $tmp                     = $this->replaceModifiers(
+                $tmp = $this->replaceModifiers(
                     array(
-                    null,
-                    null,
-                    $out[count($out) - 1][0],
-                    $match[0]
+                        null,
+                        null,
+                        $out[count($out) - 1][0],
+                        $match[0]
                     ), $curBlock, $pointer
                 );
                 $out[count($out) - 1][0] = $tmp;
@@ -1721,13 +1722,13 @@ class Compiler implements ICompiler
     /**
      * Parses a function call.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -1759,16 +1760,16 @@ class Compiler implements ICompiler
 
         if (is_array($parsingParams) || $curBlock != 'root') {
             $paramspos = strpos($cmdstr, '(');
-            $paramsep  = ')';
+            $paramsep = ')';
         } elseif (preg_match_all('#^\s*[\\\\:a-z0-9_]+(\s*\(|\s+[^(])#i', $cmdstr, $match, PREG_OFFSET_CAPTURE)) {
             $paramspos = $match[1][0][1];
-            $paramsep  = substr($match[1][0][0], - 1) === '(' ? ')' : '';
+            $paramsep = substr($match[1][0][0], -1) === '(' ? ')' : '';
             if ($paramsep === ')') {
                 $paramspos += strlen($match[1][0][0]) - 1;
                 if (substr($cmdstr, 0, 2) === 'if' || substr($cmdstr, 0, 6) === 'elseif') {
                     $paramsep = '';
                     if (strlen($match[1][0][0]) > 1) {
-                        -- $paramspos;
+                        --$paramspos;
                     }
                 }
             }
@@ -1794,16 +1795,16 @@ class Compiler implements ICompiler
                 }
             }
             $whitespace = strlen(substr($cmdstr, strlen($func), $paramspos - strlen($func)));
-            $paramstr   = substr($cmdstr, $paramspos + 1);
-            if (substr($paramstr, - 1, 1) === $paramsep) {
-                $paramstr = substr($paramstr, 0, - 1);
+            $paramstr = substr($cmdstr, $paramspos + 1);
+            if (substr($paramstr, -1, 1) === $paramsep) {
+                $paramstr = substr($paramstr, 0, -1);
             }
 
             if (strlen($paramstr) === 0) {
-                $params   = array();
+                $params = array();
                 $paramstr = '';
             } else {
-                $ptr    = 0;
+                $ptr = 0;
                 $params = array();
                 if ($func === 'empty') {
                     $params = $this->parseVar($paramstr, $ptr, strlen($paramstr), $params, 'root', $ptr);
@@ -1820,7 +1821,7 @@ class Compiler implements ICompiler
                                 }
                                 break 2;
                             } elseif ($paramstr[$ptr] === ';') {
-                                ++ $ptr;
+                                ++$ptr;
                                 if ($this->debug) {
                                     echo 'PARAM PARSING ENDED, ";" FOUND, POINTER AT ' . $ptr . "\n";
                                 }
@@ -1838,7 +1839,7 @@ class Compiler implements ICompiler
                             }
 
                             if ($paramstr[$ptr] === ' ' || $paramstr[$ptr] === ',' || $paramstr[$ptr] === "\r" || $paramstr[$ptr] === "\n" || $paramstr[$ptr] === "\t") {
-                                ++ $ptr;
+                                ++$ptr;
                             } else {
                                 break;
                             }
@@ -1862,7 +1863,7 @@ class Compiler implements ICompiler
                     }
                 }
                 $paramstr = substr($paramstr, 0, $ptr);
-                $state    = 0;
+                $state = 0;
                 foreach ($params as $k => $p) {
                     if (is_array($p) && is_array($p[1])) {
                         $state |= 2;
@@ -1959,12 +1960,12 @@ class Compiler implements ICompiler
             } else {
                 // Custom plugin
                 if (function_exists('Plugin' . Core::toCamelCase($func) . (($pluginType & Core::COMPILABLE_PLUGIN) ?
-                        'Compile' : '')) !== false) {
+                            'Compile' : '')) !== false) {
                     $params = $this->mapParams($params, 'Plugin' . Core::toCamelCase($func) . (($pluginType &
                             Core::COMPILABLE_PLUGIN) ? 'Compile' : ''), $state);
                 } // Builtin helper plugin
                 elseif (function_exists(Core::NAMESPACE_PLUGINS_HELPERS . 'Plugin' . Core::toCamelCase($func) . (
-                    ($pluginType & Core::COMPILABLE_PLUGIN) ? 'Compile' : '')) !== false) {
+                        ($pluginType & Core::COMPILABLE_PLUGIN) ? 'Compile' : '')) !== false) {
                     $params = $this->mapParams($params, Core::NAMESPACE_PLUGINS_HELPERS . 'Plugin' . Core::toCamelCase
                         ($func) . (($pluginType & Core::COMPILABLE_PLUGIN) ? 'Compile' : ''), $state);
                 } // Builtin function plugin
@@ -1994,8 +1995,8 @@ class Compiler implements ICompiler
                     $defValue = false;
                 } elseif ($defValue === 'true') {
                     $defValue = true;
-                } elseif (preg_match('#^([\'"]).*?\1$#', $defValue)) {
-                    $defValue = substr($defValue, 1, - 1);
+                } elseif ($defValue !== null && preg_match('#^([\'"]).*?\1$#', $defValue)) {
+                    $defValue = substr($defValue, 1, -1);
                 }
                 $map[] = array($param, $hasDefault, $defValue);
             }
@@ -2089,7 +2090,7 @@ class Compiler implements ICompiler
                         $output = 'call_user_func(array($this->getObjectPlugin(\'' . $callback[0] . '\'), \'' . $callback[1] . '\'), ' . $params . ')';
                     }
                     if (empty($params)) {
-                        $output = substr($output, 0, - 3) . ')';
+                        $output = substr($output, 0, -3) . ')';
                     }
                 } else {
                     if (class_exists('Plugin' . Core::toCamelCase($func)) !== false) {
@@ -2143,7 +2144,7 @@ class Compiler implements ICompiler
                         $output = 'Plugin' . Core::toCamelCase($func) . '(' . $params .
                             ')';
                     } // Builtin helper plugin
-                    elseif(function_exists(Core::NAMESPACE_PLUGINS_HELPERS . 'Plugin' . Core::toCamelCase($func)) !==
+                    elseif (function_exists(Core::NAMESPACE_PLUGINS_HELPERS . 'Plugin' . Core::toCamelCase($func)) !==
                         false) {
                         $output = Core::NAMESPACE_PLUGINS_HELPERS . 'Plugin' . Core::toCamelCase($func) . '(' .
                             $params . ')';
@@ -2181,8 +2182,8 @@ class Compiler implements ICompiler
         } // Template plugin
         elseif ($pluginType & Core::TEMPLATE_PLUGIN) {
             array_unshift($params, '$this');
-            $params                                 = self::implode_r($params);
-            $output                                 = 'Plugin' . Core::toCamelCase($func) .
+            $params = self::implode_r($params);
+            $output = 'Plugin' . Core::toCamelCase($func) .
                 $this->templatePlugins[$func]['uuid'] . '(' . $params . ')';
             $this->templatePlugins[$func]['called'] = true;
         }
@@ -2201,13 +2202,13 @@ class Compiler implements ICompiler
     /**
      * Parses a string.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -2216,20 +2217,20 @@ class Compiler implements ICompiler
     protected function parseString($in, $from, $to, $parsingParams = false, $curBlock = '', &$pointer = null)
     {
         $substr = substr($in, $from, $to - $from);
-        $first  = $substr[0];
+        $first = $substr[0];
 
         if ($this->debug) {
             echo 'STRING FOUND (in ' . htmlentities(substr($in, $from, min($to - $from, 50))) . (($to - $from) > 50 ? '...' : '') . ')' . "\n";
         }
         $strend = false;
-        $o      = $from + 1;
+        $o = $from + 1;
         while ($strend === false) {
             $strend = strpos($in, $first, $o);
             if ($strend === false) {
                 throw new CompilationException($this, 'Unfinished string, started with ' . substr($in, $from, $to - $from));
             }
             if (substr($in, $strend - 1, 1) === '\\') {
-                $o      = $strend + 1;
+                $o = $strend + 1;
                 $strend = false;
             }
         }
@@ -2249,11 +2250,11 @@ class Compiler implements ICompiler
         if ($curBlock !== 'modifier' && preg_match('#^((?:\|(?:@?[a-z0-9_]+(?::.*)*))+)#i', substr($substr, $strend + 1 - $from), $match)) {
             $modstr = $match[1];
 
-            if ($curBlock === 'root' && substr($modstr, - 1) === '}') {
-                $modstr = substr($modstr, 0, - 1);
+            if ($curBlock === 'root' && substr($modstr, -1) === '}') {
+                $modstr = substr($modstr, 0, -1);
             }
             $modstr = str_replace('\\' . $first, $first, $modstr);
-            $ptr    = 0;
+            $ptr = 0;
             $output = $this->replaceModifiers(array(null, null, $output, $modstr), 'string', $ptr);
 
             $strend += $ptr;
@@ -2264,11 +2265,11 @@ class Compiler implements ICompiler
         }
 
         if (is_array($parsingParams)) {
-            $parsingParams[] = array($output, substr($srcOutput, 1, - 1));
+            $parsingParams[] = array($output, substr($srcOutput, 1, -1));
 
             return $parsingParams;
         } elseif ($curBlock === 'namedparam') {
-            return array($output, substr($srcOutput, 1, - 1));
+            return array($output, substr($srcOutput, 1, -1));
         }
 
         return $output;
@@ -2277,13 +2278,13 @@ class Compiler implements ICompiler
     /**
      * Parses a constant.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -2321,7 +2322,7 @@ class Compiler implements ICompiler
     /**
      * Parses a constant.
      *
-     * @param string $key      the constant to parse
+     * @param string $key the constant to parse
      * @param string $curBlock the current parser-block being processed
      *
      * @return string parsed constant
@@ -2344,13 +2345,13 @@ class Compiler implements ICompiler
     /**
      * Parses a variable.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -2380,18 +2381,18 @@ class Compiler implements ICompiler
             $key = substr($match[1], 1);
 
             $matchedLength = strlen($match[0]);
-            $hasModifiers  = !empty($match[5]);
+            $hasModifiers = !empty($match[5]);
             $hasExpression = !empty($match[4]);
             $hasMethodCall = !empty($match[3]);
 
-            if (substr($key, - 1) == '.') {
-                $key = substr($key, 0, - 1);
-                -- $matchedLength;
+            if (substr($key, -1) == '.') {
+                $key = substr($key, 0, -1);
+                --$matchedLength;
             }
 
             if ($hasMethodCall) {
                 $matchedLength -= strlen($match[3]) + strlen(substr($match[1], strrpos($match[1], '->')));
-                $key        = substr($match[1], 1, strrpos($match[1], '->') - 1);
+                $key = substr($match[1], 1, strrpos($match[1], '->') - 1);
                 $methodCall = substr($match[1], strrpos($match[1], '->')) . $match[3];
             }
 
@@ -2418,45 +2419,45 @@ class Compiler implements ICompiler
 
             $cnt = substr_count($key, '$');
             if ($cnt > 0) {
-                $uid           = 0;
-                $parsed        = array($uid => '');
-                $current       = &$parsed;
-                $curTxt        = &$parsed[$uid ++];
-                $tree          = array();
-                $chars         = str_split($key, 1);
+                $uid = 0;
+                $parsed = array($uid => '');
+                $current = &$parsed;
+                $curTxt = &$parsed[$uid++];
+                $tree = array();
+                $chars = str_split($key, 1);
                 $inSplittedVar = false;
-                $bracketCount  = 0;
+                $bracketCount = 0;
 
                 while (($char = array_shift($chars)) !== null) {
                     if ($char === '[') {
                         if (count($tree) > 0) {
-                            ++ $bracketCount;
+                            ++$bracketCount;
                         } else {
-                            $tree[]        = &$current;
+                            $tree[] = &$current;
                             $current[$uid] = array($uid + 1 => '');
-                            $current       = &$current[$uid ++];
-                            $curTxt        = &$current[$uid ++];
+                            $current = &$current[$uid++];
+                            $curTxt = &$current[$uid++];
                             continue;
                         }
                     } elseif ($char === ']') {
                         if ($bracketCount > 0) {
-                            -- $bracketCount;
+                            --$bracketCount;
                         } else {
                             $current = &$tree[count($tree) - 1];
                             array_pop($tree);
                             if (current($chars) !== '[' && current($chars) !== false && current($chars) !== ']') {
                                 $current[$uid] = '';
-                                $curTxt        = &$current[$uid ++];
+                                $curTxt = &$current[$uid++];
                             }
                             continue;
                         }
                     } elseif ($char === '$') {
                         if (count($tree) == 0) {
-                            $curTxt        = &$current[$uid ++];
+                            $curTxt = &$current[$uid++];
                             $inSplittedVar = true;
                         }
                     } elseif (($char === '.' || $char === '-') && count($tree) == 0 && $inSplittedVar) {
-                        $curTxt        = &$current[$uid ++];
+                        $curTxt = &$current[$uid++];
                         $inSplittedVar = false;
                     }
 
@@ -2533,7 +2534,7 @@ class Compiler implements ICompiler
 
             // handle modifiers
             if ($curBlock !== 'modifier' && $hasModifiers) {
-                $ptr    = 0;
+                $ptr = 0;
                 $output = $this->replaceModifiers(array(null, null, $output, $match[5]), 'var', $ptr);
                 if ($pointer !== null) {
                     $pointer += $ptr;
@@ -2567,10 +2568,10 @@ class Compiler implements ICompiler
     /**
      * Parses any number of chained method calls/property reads.
      *
-     * @param string $output     the variable or whatever upon which the method are called
+     * @param string $output the variable or whatever upon which the method are called
      * @param string $methodCall method call source, starting at "->"
-     * @param string $curBlock   the current parser-block being processed
-     * @param int    $pointer    a reference to a pointer that will be increased by the amount of characters parsed
+     * @param string $curBlock the current parser-block being processed
+     * @param int $pointer a reference to a pointer that will be increased by the amount of characters parsed
      *
      * @return string parsed call(s)/read(s)
      */
@@ -2585,23 +2586,23 @@ class Compiler implements ICompiler
             }
 
             if (in_array(
-                $methodCall[$ptr], array(
-                    ';',
-                    ',',
-                    '/',
-                    ' ',
-                    "\t",
-                    "\r",
-                    "\n",
-                    ')',
-                    '+',
-                    '*',
-                    '%',
-                    '=',
-                    '-',
-                    '|'
-                )
-            ) || substr($methodCall, $ptr, strlen($this->rd)) === $this->rd
+                    $methodCall[$ptr], array(
+                        ';',
+                        ',',
+                        '/',
+                        ' ',
+                        "\t",
+                        "\r",
+                        "\n",
+                        ')',
+                        '+',
+                        '*',
+                        '%',
+                        '=',
+                        '-',
+                        '|'
+                    )
+                ) || substr($methodCall, $ptr, strlen($this->rd)) === $this->rd
             ) {
                 // break char found
                 break;
@@ -2630,7 +2631,7 @@ class Compiler implements ICompiler
                 if ($this->securityPolicy !== null) {
                     $argPos = strpos($parsedCall, '(');
                     $method = strtolower(substr($parsedCall, 0, $argPos));
-                    $args   = substr($parsedCall, $argPos);
+                    $args = substr($parsedCall, $argPos);
                     if ($curBlock === 'root') {
                         $output = '$this->getSecurityPolicy()->callMethod($this, ' . $output . ', ' . var_export($method, true) . ', array' . $args . ')';
                     } else {
@@ -2655,7 +2656,7 @@ class Compiler implements ICompiler
      * Parses a constant variable (a variable that doesn't contain another variable) and preprocesses it to save
      * runtime processing time.
      *
-     * @param string $key      the variable to parse
+     * @param string $key the variable to parse
      * @param string $curBlock the current parser-block being processed
      *
      * @return string parsed variable
@@ -2709,7 +2710,7 @@ class Compiler implements ICompiler
                     $parentCnt = 0;
 
                     while (true) {
-                        ++ $parentCnt;
+                        ++$parentCnt;
                         array_shift($m[2]);
                         array_shift($m[1]);
                         if (current($m[2]) === '_parent') {
@@ -2769,8 +2770,8 @@ class Compiler implements ICompiler
      * Flattens a variable tree, this helps in parsing very complex variables such as $var.foo[$foo.bar->baz].baz,
      * it computes the contents of the brackets first and works out from there.
      *
-     * @param array $tree     the variable tree parsed by he parseVar() method that must be flattened
-     * @param bool  $recursed leave that to false by default, it is only for internal use
+     * @param array $tree the variable tree parsed by he parseVar() method that must be flattened
+     * @param bool $recursed leave that to false by default, it is only for internal use
      *
      * @return string flattened tree
      */
@@ -2792,9 +2793,9 @@ class Compiler implements ICompiler
                         echo 'PARSING SUBVARS IN : ' . $key . "\n";
                     }
                     if ($cnt > 0) {
-                        while (-- $cnt >= 0) {
+                        while (--$cnt >= 0) {
                             if (isset($last)) {
-                                $last = strrpos($key, '$', - (strlen($key) - $last + 1));
+                                $last = strrpos($key, '$', -(strlen($key) - $last + 1));
                             } else {
                                 $last = strrpos($key, '$');
                             }
@@ -2803,11 +2804,11 @@ class Compiler implements ICompiler
                             $len = strlen($submatch[0]);
                             $key = substr_replace(
                                 $key, preg_replace_callback(
-                                    '#(\$[a-z0-9_]+((?:(?:\.|->)(?:[a-z0-9_]+|(?R))|\[(?:[a-z0-9_]+|(?R))\]))*)' . '((?:(?:[+/*%-])(?:\$[a-z0-9.[\]>_:-]+(?:\([^)]*\))?|[0-9.,]*))*)#i', array(
-                                        $this,
-                                        'replaceVarKeyHelper'
-                                    ), substr($key, $last, $len)
-                                ), $last, $len
+                                '#(\$[a-z0-9_]+((?:(?:\.|->)(?:[a-z0-9_]+|(?R))|\[(?:[a-z0-9_]+|(?R))\]))*)' . '((?:(?:[+/*%-])(?:\$[a-z0-9.[\]>_:-]+(?:\([^)]*\))?|[0-9.,]*))*)#i', array(
+                                $this,
+                                'replaceVarKeyHelper'
+                            ), substr($key, $last, $len)
+                            ), $last, $len
                             );
                             if ($this->debug) {
                                 echo 'RECURSIVE VAR REPLACEMENT DONE : ' . $key . "\n";
@@ -2842,13 +2843,13 @@ class Compiler implements ICompiler
     /**
      * Parses various constants, operators or non-quoted strings.
      *
-     * @param string $in            the string within which we must parse something
-     * @param int    $from          the starting offset of the parsed area
-     * @param int    $to            the ending offset of the parsed area
-     * @param mixed  $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
+     * @param string $in the string within which we must parse something
+     * @param int $from the starting offset of the parsed area
+     * @param int $to the ending offset of the parsed area
+     * @param mixed $parsingParams must be an array if we are parsing a function or modifier's parameters, or false by
      *                              default
-     * @param string $curBlock      the current parser-block being processed
-     * @param mixed  $pointer       a reference to a pointer that will be increased by the amount of characters parsed,
+     * @param string $curBlock the current parser-block being processed
+     * @param mixed $pointer a reference to a pointer that will be increased by the amount of characters parsed,
      *                              or null by default
      *
      * @return string parsed values
@@ -2906,7 +2907,7 @@ class Compiler implements ICompiler
         foreach ($breakChars as $k => $char) {
             $test = strpos($substr, $char);
             if ($test !== false && $test < $end) {
-                $end     = $test;
+                $end = $test;
                 $breaker = $k;
             }
         }
@@ -2925,7 +2926,7 @@ class Compiler implements ICompiler
             $pointer += strlen($substr);
         }
 
-        $src    = $substr;
+        $src = $substr;
         $substr = trim($substr);
 
         if (strtolower($substr) === 'false' || strtolower($substr) === 'no' || strtolower($substr) === 'off') {
@@ -2933,19 +2934,19 @@ class Compiler implements ICompiler
                 echo 'BOOLEAN(FALSE) PARSED' . "\n";
             }
             $substr = 'false';
-            $type   = self::T_BOOL;
+            $type = self::T_BOOL;
         } elseif (strtolower($substr) === 'true' || strtolower($substr) === 'yes' || strtolower($substr) === 'on') {
             if ($this->debug) {
                 echo 'BOOLEAN(TRUE) PARSED' . "\n";
             }
             $substr = 'true';
-            $type   = self::T_BOOL;
+            $type = self::T_BOOL;
         } elseif ($substr === 'null' || $substr === 'NULL') {
             if ($this->debug) {
                 echo 'NULL PARSED' . "\n";
             }
             $substr = 'null';
-            $type   = self::T_NULL;
+            $type = self::T_NULL;
         } elseif (is_numeric($substr)) {
             $substr = (float)$substr;
             if ((int)$substr == $substr) {
@@ -2959,7 +2960,7 @@ class Compiler implements ICompiler
             if ($this->debug) {
                 echo 'SIMPLE MATH PARSED . "\n"';
             }
-            $type   = self::T_MATH;
+            $type = self::T_MATH;
             $substr = '(' . $substr . ')';
         } elseif ($curBlock === 'condition' && array_search($substr, $breakChars, true) !== false) {
             if ($this->debug) {
@@ -2969,7 +2970,7 @@ class Compiler implements ICompiler
             //$substr = '"'.$substr.'"';
         } else {
             $substr = $this->replaceStringVars('\'' . str_replace('\'', '\\\'', $substr) . '\'', '\'', $curBlock);
-            $type   = self::T_UNQUOTED_STRING;
+            $type = self::T_UNQUOTED_STRING;
             if ($this->debug) {
                 echo 'BLABBER (' . $substr . ') CASTED AS STRING' . "\n";
             }
@@ -2991,8 +2992,8 @@ class Compiler implements ICompiler
     /**
      * Replaces variables within a parsed string.
      *
-     * @param string $string   the parsed string
-     * @param string $first    the first character parsed in the string, which is the string delimiter (' or ")
+     * @param string $string the parsed string
+     * @param string $first the first character parsed in the string, which is the string delimiter (' or ")
      * @param string $curBlock the current parser-block being processed
      *
      * @return string the original string with variables replaced
@@ -3007,7 +3008,7 @@ class Compiler implements ICompiler
         while (($pos = strpos($string, '$', $pos)) !== false) {
             $prev = substr($string, $pos - 1, 1);
             if ($prev === '\\') {
-                ++ $pos;
+                ++$pos;
                 continue;
             }
 
@@ -3032,7 +3033,7 @@ class Compiler implements ICompiler
             '#("|\')\.(.+?)\.\1((?:\|(?:@?[a-z0-9_]+(?:(?::("|\').+?\4|:[^`]*))*))+)#i', array(
             $this,
             'replaceModifiers'
-            ), $string
+        ), $string
         );
 
         // replace escaped dollar operators by unescaped ones if required
@@ -3046,10 +3047,10 @@ class Compiler implements ICompiler
     /**
      * Replaces the modifiers applied to a string or a variable.
      *
-     * @param array  $m        the regex matches that must be array(1=>"double or single quotes enclosing a string,
+     * @param array $m the regex matches that must be array(1=>"double or single quotes enclosing a string,
      *                         when applicable", 2=>"the string or var", 3=>"the modifiers matched")
      * @param string $curBlock the current parser-block being processed
-     * @param null   $pointer
+     * @param null $pointer
      *
      * @return string the input enclosed with various function calls according to the modifiers found
      * @throws CompilationException
@@ -3067,9 +3068,9 @@ class Compiler implements ICompiler
         // remove first pipe
         $cmdstrsrc = substr($m[3], 1);
         // remove last quote if present
-        if (substr($cmdstrsrc, - 1, 1) === $m[1]) {
-            $cmdstrsrc = substr($cmdstrsrc, 0, - 1);
-            $add       = $m[1];
+        if (substr($cmdstrsrc, -1, 1) === $m[1]) {
+            $cmdstrsrc = substr($cmdstrsrc, 0, -1);
+            $add = $m[1];
         }
 
         $output = $m[2];
@@ -3090,28 +3091,28 @@ class Compiler implements ICompiler
                 }
                 break;
             }
-            $cmdstr   = $cmdstrsrc;
+            $cmdstr = $cmdstrsrc;
             $paramsep = ':';
             if (!preg_match('/^(@{0,2}[a-z_][a-z0-9_]*)(:)?/i', $cmdstr, $match)) {
                 throw new CompilationException($this, 'Invalid modifier name, started with : ' . substr($cmdstr, 0, 10));
             }
             $paramspos = !empty($match[2]) ? strlen($match[1]) : false;
-            $func      = $match[1];
+            $func = $match[1];
 
             $state = 0;
             if ($paramspos === false) {
                 $cmdstrsrc = substr($cmdstrsrc, strlen($func));
-                $params    = array();
+                $params = array();
                 if ($this->debug) {
                     echo 'MODIFIER (' . $func . ') CALLED WITH NO PARAMS' . "\n";
                 }
             } else {
                 $paramstr = substr($cmdstr, $paramspos + 1);
-                if (substr($paramstr, - 1, 1) === $paramsep) {
-                    $paramstr = substr($paramstr, 0, - 1);
+                if (substr($paramstr, -1, 1) === $paramsep) {
+                    $paramstr = substr($paramstr, 0, -1);
                 }
 
-                $ptr    = 0;
+                $ptr = 0;
                 $params = array();
                 while ($ptr < strlen($paramstr)) {
                     if ($this->debug) {
@@ -3142,11 +3143,11 @@ class Compiler implements ICompiler
                                 $pointer -= strlen($paramstr) - $ptr;
                             }
                         }
-                        ++ $ptr;
+                        ++$ptr;
                         break;
                     }
                     if ($ptr < strlen($paramstr) && $paramstr[$ptr] === ':') {
-                        ++ $ptr;
+                        ++$ptr;
                     }
                 }
                 $cmdstrsrc = substr($cmdstrsrc, strlen($func) + 1 + $ptr);
@@ -3169,7 +3170,7 @@ class Compiler implements ICompiler
             // check if we must use array_map with this plugin or not
             $mapped = false;
             if (substr($func, 0, 1) === '@') {
-                $func   = substr($func, 1);
+                $func = substr($func, 1);
                 $mapped = true;
             }
 
@@ -3228,7 +3229,7 @@ class Compiler implements ICompiler
                     $pluginName = $callback = $this->customPlugins[$func]['callback'];
                     if (($pluginType & Core::CLASS_PLUGIN) && !is_array($callback)) {
                         $pluginName = $this->customPlugins[$func]['callback'];
-                        $callback   = array($pluginName, ($pluginType & Core::COMPILABLE_PLUGIN) ? 'compile' : 'process');
+                        $callback = array($pluginName, ($pluginType & Core::COMPILABLE_PLUGIN) ? 'compile' : 'process');
                     }
                 } else {
                     if (class_exists('Plugin' . Core::toCamelCase($func)) !== false || function_exists('Plugin' .
@@ -3320,7 +3321,7 @@ class Compiler implements ICompiler
                                 $output = ($mapped ? '$this->arrayMap' : 'call_user_func_array') . '(array(\'' . $callback[0] . '\', \'' . $callback[1] . '\'), array(' . $params . '))';
                             }
                         } elseif ($mapped) {
-                            $output = '$this->arrayMap(array($this->getObjectPlugin(\''.
+                            $output = '$this->arrayMap(array($this->getObjectPlugin(\'' .
                                 Core::NAMESPACE_PLUGINS_FUNCTIONS . 'Plugin' . Core::toCamelCase($func) . '\'),
                             \'process\'), array(' . $params . '))';
                         } else {
@@ -3355,8 +3356,8 @@ class Compiler implements ICompiler
      * to handle pre-compiled values and the fact that we do not need to enclose everything with
      * "array" and do not require top-level keys to be displayed.
      *
-     * @param array $params        the array to implode
-     * @param bool  $recursiveCall if set to true, the function outputs key names for the top level
+     * @param array $params the array to implode
+     * @param bool $recursiveCall if set to true, the function outputs key names for the top level
      *
      * @return string the imploded array
      */
@@ -3393,7 +3394,7 @@ class Compiler implements ICompiler
      */
     protected function getPluginType($name)
     {
-        $pluginType = - 1;
+        $pluginType = -1;
 
         if (($this->securityPolicy === null && (function_exists($name) || strtolower($name) === 'isset' || strtolower($name) === 'empty')) || ($this->securityPolicy !== null && array_key_exists(strtolower($name), $this->securityPolicy->getAllowedPhpFunctions()) !== false)) {
             $phpFunc = true;
@@ -3436,7 +3437,7 @@ class Compiler implements ICompiler
                     $pluginType |= Core::COMPILABLE_PLUGIN;
                 }
             } // Function plugin (with/without namespaces)
-            elseif (function_exists(Core::NAMESPACE_PLUGINS_FUNCTIONS . 'Plugin' . Core::toCamelCase ($name)) !==
+            elseif (function_exists(Core::NAMESPACE_PLUGINS_FUNCTIONS . 'Plugin' . Core::toCamelCase($name)) !==
                 false || function_exists('Plugin' . Core::toCamelCase($name)) !== false) {
                 $pluginType = Core::FUNC_PLUGIN;
             } // Function plugin compile (with/without namespaces)
@@ -3461,11 +3462,10 @@ class Compiler implements ICompiler
                 $pluginType = Core::SMARTY_BLOCK;
             } // Everything else
             else {
-                if ($pluginType === - 1) {
+                if ($pluginType === -1) {
                     try {
                         $this->getCore()->getLoader()->loadPlugin('Plugin' . Core::toCamelCase($name));
-                    }
-                    catch (Exception $e) {
+                    } catch (Exception $e) {
                         if (isset($phpFunc)) {
                             $pluginType = Core::NATIVE_PLUGIN;
                         } elseif (is_object($this->getCore()->getPluginProxy()) && $this->getCore()->getPluginProxy()->handles($name)) {
@@ -3478,7 +3478,7 @@ class Compiler implements ICompiler
                 } else {
                     throw new Exception('Plugin "' . $name . '" could not be found, type:' . $pluginType);
                 }
-                ++ $pluginType;
+                ++$pluginType;
             }
         }
 
@@ -3519,11 +3519,11 @@ class Compiler implements ICompiler
     /**
      * Maps the parameters received from the template onto the parameters required by the given callback.
      *
-     * @param array    $params   the array of parameters
+     * @param array $params the array of parameters
      * @param callback $callback the function or method to reflect on to find out the required parameters
-     * @param int      $callType the type of call in the template, 0 = no params, 1 = php-style call, 2 = named
+     * @param int $callType the type of call in the template, 0 = no params, 1 = php-style call, 2 = named
      *                           parameters call
-     * @param array    $map      the parameter map to use, if not provided it will be built from the callback
+     * @param array $map the parameter map to use, if not provided it will be built from the callback
      *
      * @return array parameters sorted in the correct order with missing optional parameters filled
      * @throws CompilationException
@@ -3547,7 +3547,7 @@ class Compiler implements ICompiler
         }
 
         // loops over the param map and assigns values from the template or default value for unset optional params
-        foreach ($map as $k => $v){
+        foreach ($map as $k => $v) {
             if ($v[0] === '*') {
                 // "rest" array parameter, fill every remaining params in it and then break
                 if (count($ps) === 0) {
@@ -3556,7 +3556,7 @@ class Compiler implements ICompiler
                             $this, 'Rest argument missing for ' . str_replace(
                                 array(
                                     Core::NAMESPACE_PLUGINS_FUNCTIONS . 'Plugin',
-                                'Compile'
+                                    'Compile'
                                 ), '', (is_array($callback) ? $callback[0] : $callback)
                             )
                         );
@@ -3564,11 +3564,11 @@ class Compiler implements ICompiler
                         break;
                     }
                 }
-                $tmp  = array();
+                $tmp = array();
                 $tmp2 = array();
                 $tmp3 = array();
                 foreach ($ps as $i => $p) {
-                    $tmp[$i]  = $p[0];
+                    $tmp[$i] = $p[0];
                     $tmp2[$i] = $p[1];
                     $tmp3[$i] = isset($p[2]) ? $p[2] : 0;
                     unset($ps[$i]);
@@ -3600,7 +3600,7 @@ class Compiler implements ICompiler
                     $this, 'Argument ' . $k . '/' . $v[0] . ' missing for ' . str_replace(
                         array(
                             Core::NAMESPACE_PLUGINS_FUNCTIONS . 'Plugin',
-                        'Compile'
+                            'Compile'
                         ), '', $name
                     )
                 );
@@ -3643,18 +3643,18 @@ class Compiler implements ICompiler
 
         $out = array();
         foreach ($ref->getParameters() as $param) {
-            
+
             $class = $param->getType() && !$param->getType()->isBuiltin()
                 ? new \ReflectionClass($param->getType()->getName())
-                : null;            
-            
+                : null;
+
             if (($class) !== null && $class->name === 'Dwoo\Core') {
                 continue;
             }
             if (($class) !== null && $class->name === 'Dwoo\Compiler') {
                 continue;
             }
-            if ($param->getName() === 'rest' && $param->isArray() === true) {
+            if ($param->getName() === 'rest' && self::isReflectionParameterAnArray($param) === true) {
                 $out[] = array('*', $param->isOptional(), null);
                 continue;
             }
@@ -3672,8 +3672,8 @@ class Compiler implements ICompiler
      * Returns a default instance of this compiler, used by default by all Dwoo templates that do not have a
      * specific compiler assigned and when you do not override the default compiler factory function.
      *
-     * @see    Core::setDefaultCompilerFactory()
      * @return Compiler
+     * @see    Core::setDefaultCompilerFactory()
      */
     public static function compilerFactory()
     {
@@ -3682,5 +3682,18 @@ class Compiler implements ICompiler
         }
 
         return self::$instance;
+    }
+
+    public static function isReflectionParameterAnArray(\ReflectionParameter $reflectionParameter): bool
+    {
+        $reflectionType = $reflectionParameter->getType();
+
+        if (!$reflectionType) return false;
+
+        $types = $reflectionType instanceof \ReflectionUnionType
+            ? $reflectionType->getTypes()
+            : [$reflectionType];
+
+        return in_array('array', array_map(fn(\ReflectionNamedType $t) => $t->getName(), $types));
     }
 }

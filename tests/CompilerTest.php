@@ -161,11 +161,10 @@ namespace Dwoo\Tests
             $this->assertEquals('03boo534', $this->dwoo->get($tpl, array(), $this->compiler));
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testMixedParametersWrongOrder()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{assign value=5, 3)}');
             $tpl->forceCompilation();
             $this->dwoo->get($tpl, array(), $this->compiler);
@@ -227,11 +226,9 @@ replace="BAR"
             $this->assertEquals('{$foo}{hurray}', $this->dwoo->get($tpl, array(), $this->compiler));
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testUnclosedLiteral()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
             $tpl = new TemplateString('{literal}{$foo}{hurray}');
             $tpl->forceCompilation();
             $this->dwoo->get($tpl, array(), $this->compiler);
@@ -500,11 +497,9 @@ replace="BAR"
             $this->dwoo->removePlugin('test');
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testAddPreProcessorWithBadName()
         {
+            $this->expectException(\Dwoo\Exception::class);
             $cmp = new Compiler();
             $cmp->addPreProcessor('__BAAAAD__', true);
 
@@ -513,11 +508,9 @@ replace="BAR"
             $this->dwoo->get($tpl, array(), $cmp);
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testAddPostProcessorWithBadName()
         {
+            $this->expectException(\Dwoo\Exception::class);
             $cmp = new Compiler();
             $cmp->addPostProcessor('__BAAAAD__', true);
 
@@ -526,66 +519,60 @@ replace="BAR"
             $this->dwoo->get($tpl, array(), $cmp);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testCloseUnopenedBlock()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{/foreach}');
             $tpl->forceCompilation();
 
             $this->dwoo->get($tpl, array(), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testParseError()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{++}');
             $tpl->forceCompilation();
 
             $this->dwoo->get($tpl, array(), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testUnfinishedStringException()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{"fooo}');
             $tpl->forceCompilation();
 
             $this->dwoo->get($tpl, array(), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testMissingArgumentException()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{upper()}');
             $tpl->forceCompilation();
 
             $this->dwoo->get($tpl, array('foo' => 0), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testMissingArgumentExceptionVariation2()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{upper foo=bar}');
             $tpl->forceCompilation();
 
             $this->dwoo->get($tpl, array(), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testUnclosedTemplateTag()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('aa{upper foo=bar');
             $tpl->forceCompilation();
 
@@ -813,11 +800,10 @@ fail
             $this->assertEquals('foo', $this->dwoo->get($tpl, array()));
         }
 
-        /**
-         * @expectedException \Dwoo\Compilation\Exception
-         */
         public function testElseWithoutIfIsInvalid()
         {
+            $this->expectException(\Dwoo\Compilation\Exception::class);
+
             $tpl = new TemplateString('{else}1{/}');
             $tpl->forceCompilation();
             $this->dwoo->get($tpl, array(), $this->compiler);

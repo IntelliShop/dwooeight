@@ -1,7 +1,6 @@
 <?php
 
-namespace Dwoo\Tests
-{
+namespace Dwoo\Tests {
 
     use Dwoo\Compiler;
     use Dwoo\Core;
@@ -27,7 +26,7 @@ namespace Dwoo\Tests
         public function testCoverConstructorsEtc()
         {
             // extend this class and override this in your constructor to test a modded compiler
-            $tpl            = new TemplateString('');
+            $tpl = new TemplateString('');
             $tpl->forceCompilation();
             $this->assertEquals('', $this->dwoo->get($tpl, array(), $this->compiler));
 
@@ -41,9 +40,9 @@ namespace Dwoo\Tests
             $tpl = new TemplateString('{$foo.$bar[$baz->qux][moo]}{with $foo}{$a.b.moo}{/with}{$baz->qux}');
             $tpl->forceCompilation();
 
-            $Obj      = new stdClass();
+            $Obj = new stdClass();
             $Obj->qux = 'b';
-            $data     = array(
+            $data = array(
                 'foo' => array('a' => array('b' => array('moo' => 'Yay!'))),
                 'bar' => 'a',
                 'baz' => $Obj,
@@ -76,19 +75,17 @@ namespace Dwoo\Tests
             $this->assertEquals('a', $output);
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testDwooGetNonTemplate()
         {
+            $this->expectException(\Dwoo\Exception::class);
+
             echo $this->dwoo->get(null, array());
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testDwooGetNonData()
         {
+            $this->expectException(\Dwoo\Exception::class);
+
             $tpl = new TemplateString('a');
             $this->dwoo->get($tpl, null);
         }
@@ -102,11 +99,9 @@ namespace Dwoo\Tests
             $this->assertEquals($policy->getConstantHandling(), $this->dwoo->getSecurityPolicy()->getConstantHandling());
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testWrongResourceName()
         {
+            $this->expectException(\Dwoo\Exception::class);
             $this->dwoo->templateFactory('sdmlb', 'fookm');
         }
 
@@ -146,7 +141,7 @@ namespace Dwoo\Tests
             $tpl = new TemplateString('{assign "Yay!" a.b->qux}{$a.b->qux}');
             $tpl->forceCompilation();
 
-            $Obj      = new stdClass();
+            $Obj = new stdClass();
             $Obj->qux = 'Noes:(';
 
             $this->assertEquals('Yay!', $this->dwoo->get($tpl, array('a' => array('b' => $Obj)), $this->compiler));
@@ -154,7 +149,7 @@ namespace Dwoo\Tests
             $tpl = new TemplateString('{assign "Yay!" a->b.qux}{$a->b.qux}');
             $tpl->forceCompilation();
 
-            $Obj    = new stdClass();
+            $Obj = new stdClass();
             $Obj->b = array('qux' => 'Noes:(');
 
             $this->assertEquals('Yay!', $this->dwoo->get($tpl, array('a' => $Obj), $this->compiler));
@@ -201,7 +196,7 @@ namespace Dwoo\Tests
         public function testSuperGlobals()
         {
             $_GET[5] = 'Yay';
-            $tpl     = new TemplateString('{$dwoo.get.5} {$dwoo.get.$foo}');
+            $tpl = new TemplateString('{$dwoo.get.5} {$dwoo.get.$foo}');
             $tpl->forceCompilation();
 
             $this->assertEquals('Yay Yay', $this->dwoo->get($tpl, array('foo' => 5), $this->compiler));
@@ -263,7 +258,7 @@ namespace Dwoo\Tests
             $this->assertEquals('foo1', $this->dwoo->get($tpl, array('foo' => 1)));
             $this->assertEquals(true, $this->dwoo->isCached($tpl));
             $this->assertEquals('foo1', $this->dwoo->get($tpl, array('foo' => 1)));
-            $this->assertEquals(1, $this->dwoo->clearCache(- 11));
+            $this->assertEquals(1, $this->dwoo->clearCache(-11));
             $this->assertEquals(false, $this->dwoo->isCached($tpl));
         }
 
@@ -281,7 +276,7 @@ namespace Dwoo\Tests
             echo $this->dwoo->get($tpl, array('foo' => 1));
             $cap = ob_get_clean();
             $this->assertEquals('foo1', $cap);
-            $this->assertEquals(1, $this->dwoo->clearCache(- 11));
+            $this->assertEquals(1, $this->dwoo->clearCache(-11));
         }
 
         public function testCachedTemplateWithDwoo_Cache()
@@ -293,7 +288,7 @@ namespace Dwoo\Tests
             $this->assertEquals('foo1bar', $this->dwoo->get($tpl, array('foo' => 1)));
             $this->assertEquals(true, $this->dwoo->isCached($tpl));
             $this->assertEquals('foo1bar', $this->dwoo->get($tpl, array('foo' => 1)));
-            $this->assertEquals(1, $this->dwoo->clearCache(- 11));
+            $this->assertEquals(1, $this->dwoo->clearCache(-11));
             $this->assertEquals(false, $this->dwoo->isCached($tpl));
         }
 
@@ -307,14 +302,14 @@ namespace Dwoo\Tests
             $this->assertEquals(true, $this->dwoo->isCached($tpl));
             $this->assertEquals('foo1bar', $this->dwoo->get($tpl, array('foo' => 1)));
             $this->assertEquals(false, $tpl->clearCache($this->dwoo, 10));
-            $this->assertEquals(true, $tpl->clearCache($this->dwoo, - 1));
+            $this->assertEquals(true, $tpl->clearCache($this->dwoo, -1));
             $this->assertEquals(false, $this->dwoo->isCached($tpl));
         }
 
         public function testTemplateGetSet()
         {
             $this->dwoo->setCacheTime(10);
-            $tpl  = new TemplateString('foo');
+            $tpl = new TemplateString('foo');
             $tpl2 = new TemplateFile('./resources/test.html');
 
             $this->assertEquals(false, $tpl->getResourceIdentifier());
@@ -326,7 +321,7 @@ namespace Dwoo\Tests
         public function testPluginProxyGetSet()
         {
             $proxy = new ProxyHelper();
-            $dwoo  = new Core();
+            $dwoo = new Core();
             $dwoo->setPluginProxy($proxy);
             $this->assertEquals($proxy, $dwoo->getPluginProxy());
         }
@@ -402,8 +397,8 @@ baz'));
         }
     }
 }
-namespace
-{
+
+namespace {
 
     class TestIterator implements Iterator
     {
@@ -415,27 +410,27 @@ namespace
             $this->data = $data;
         }
 
-        public function current()
+        public function current(): mixed
         {
             return $this->data[$this->idx];
         }
 
-        public function next()
+        public function next(): void
         {
-            ++ $this->idx;
+            ++$this->idx;
         }
 
-        public function rewind()
+        public function rewind(): void
         {
             $this->idx = 0;
         }
 
-        public function key()
+        public function key(): mixed
         {
             return $this->idx;
         }
 
-        public function valid()
+        public function valid(): bool
         {
             return isset($this->data[$this->idx]);
         }
@@ -443,7 +438,7 @@ namespace
 
     class TestCountableIterator extends TestIterator implements Countable
     {
-        public function count()
+        public function count(): int
         {
             return count($this->data);
         }
@@ -458,22 +453,22 @@ namespace
             $this->data = $data;
         }
 
-        public function offsetExists($k)
+        public function offsetExists($k): bool
         {
             return isset($this->data[$k]);
         }
 
-        public function offsetGet($k)
+        public function offsetGet($k): mixed
         {
             return $this->data[$k];
         }
 
-        public function offsetUnset($k)
+        public function offsetUnset($k): void
         {
             unset($this->data[$k]);
         }
 
-        public function offsetSet($k, $v)
+        public function offsetSet($k, $v): void
         {
             $this->data[$k] = $v;
         }
@@ -481,7 +476,7 @@ namespace
 
     class TestCountableArrayAccess extends TestArrayAccess implements Countable
     {
-        public function count()
+        public function count(): int
         {
             return count($this->data);
         }

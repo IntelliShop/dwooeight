@@ -1,7 +1,6 @@
 <?php
 
-namespace Dwoo\Tests
-{
+namespace Dwoo\Tests {
 
     use Dwoo\Data;
     use Dwoo\Template\Str as TemplateString;
@@ -92,24 +91,22 @@ namespace Dwoo\Tests
             $this->assertEquals(true, $data->isAssigned('variable'));
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testUnset()
         {
-            $data           = new Data();
+            $this->expectException(\Dwoo\Exception::class);
+
+            $data = new Data();
             $data->variable = 'val';
             $this->assertEquals(true, isset($data->variable));
             unset($data->variable);
             $data->get('variable');
         }
 
-        /**
-         * @expectedException \Dwoo\Exception
-         */
         public function testUnassign()
         {
-            $data           = new Data();
+            $this->expectException(\Dwoo\Exception::class);
+
+            $data = new Data();
             $data->variable = 'val';
             $this->assertEquals(true, isset($data->variable));
             $data->unassign('variable');

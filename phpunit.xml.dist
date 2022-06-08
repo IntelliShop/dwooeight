@@ -10,7 +10,6 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
          bootstrap="vendor/autoload.php">
 
     <testsuites>
@@ -19,9 +18,4 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./lib/Dwoo</directory>
-        </whitelist>
-    </filter>
 </phpunit>

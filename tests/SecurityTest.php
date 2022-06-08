@@ -3,6 +3,8 @@
 namespace Dwoo\Tests
 {
 
+    use Dwoo\Exception as DwooException;
+    use Dwoo\Security\Exception as SecurityException;
     use Dwoo\Template\Str as TemplateString;
     use Dwoo\Security\Policy as SecurityPolicy;
     use PHPUnit_Framework_Error;
@@ -76,11 +78,10 @@ namespace Dwoo\Tests
             $this->policy->disallowPhpFunction('testphpfunc');
         }
 
-        /**
-         * @expectedException \Dwoo\Security\Exception
-         */
         public function testNotAllowedPhpFunction()
         {
+            $this->expectException(DwooException::class);
+
             $tpl = new TemplateString('{testphpfunc("foo")}');
             $tpl->forceCompilation();
 
@@ -99,11 +100,11 @@ namespace Dwoo\Tests
             $this->policy->disallowMethod('testSecurityClass', 'test');
         }
 
-        /**
-         * @expectedException PHPUnit_Framework_Error
-         */
         public function testNotAllowedMethod()
         {
+            $this->expectError();
+            $this->expectErrorMessage('Dwoo error (in string) : The current security policy prevents you from calling testSecurityClass::testok()');
+
             $tpl = new TemplateString('{$obj->testOK("foo")}');
             $tpl->forceCompilation();
 
@@ -122,25 +123,21 @@ namespace Dwoo\Tests
             $this->policy->disallowMethod('testSecurityClass', 'testStatic');
         }
 
-        /**
-         * @expectedException \Dwoo\Security\Exception
-         */
         public function testNotAllowedStaticMethod()
         {
             $tpl = new TemplateString('{testSecurityClass::testStatic("foo")}');
             $tpl->forceCompilation();
 
+            $this->expectException(SecurityException::class);
             $this->dwoo->get($tpl, array(), $this->compiler);
         }
 
-        /**
-         * @expectedException \Dwoo\Security\Exception
-         */
         public function testNotAllowedSubExecution()
         {
             $tpl = new TemplateString('{$obj->test(preg_replace_callback("{.}", "mail", "f"))}');
             $tpl->forceCompilation();
 
+            $this->expectException(SecurityException::class);
             $this->dwoo->get($tpl, array('obj' => new testSecurityClass()), $this->compiler);
         }
 

@@ -55,7 +55,7 @@ class PluginCounter extends Plugin
                 'skip'      => $skip === null ? 1 : (int)$skip,
                 'print'     => $print === null ? true : (bool)$print,
                 'assign'    => $assign === null ? null : (string)$assign,
-                'direction' => strtolower($direction) === 'down' ? - 1 : 1,
+                'direction' => $direction !== null ? (strtolower($direction) === 'down' ? - 1 : 1) : 1,
             );
         } // increment
         else {

@@ -14,7 +14,7 @@ namespace Dwoo\Tests
     class PluginProxyTest extends BaseTests
     {
 
-        public function tearDown()
+        public function tearDown(): void
         {
             parent::tearDown();
             unset($this->compiler, $this->dwoo);
@@ -28,7 +28,7 @@ namespace Dwoo\Tests
             $tpl = new TemplateString('{F1_Stub(F2_Stub())}');
             $tpl->forceCompilation();
 
-            $this->assertContains('PluginProxyTest_F1_Stub(PluginProxyTest_F2_Stub', $this->compiler->compile($this->dwoo, $tpl));
+            $this->assertStringContainsString('PluginProxyTest_F1_Stub(PluginProxyTest_F2_Stub', $this->compiler->compile($this->dwoo, $tpl));
         }
 
         public function testAdvNestedProxyCall()
@@ -39,7 +39,7 @@ namespace Dwoo\Tests
             $tpl = new TemplateString('{assign F1_Stub(F2_Stub(\'/public/css/global.css\'))->something(F3_Stub(\'/public/css/global.css\')) styles}');
             $tpl->forceCompilation();
 
-            $this->assertContains('PluginProxyTest_F3_Stub(', $this->compiler->compile($this->dwoo, $tpl));
+            $this->assertStringContainsString('PluginProxyTest_F3_Stub(', $this->compiler->compile($this->dwoo, $tpl));
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace Dwoo\Tests
 {
 
+    use Dwoo\Plugins\Functions\PluginDateFormat;
     use Dwoo\Template\Str as TemplateString;
     use Dwoo\Template\File as TemplateFile;
 
@@ -130,15 +131,15 @@ namespace Dwoo\Tests
         {
             $tpl = new TemplateString('{date_format $dwoo.now "%Y%H:%M:%S"}{date_format $foo "%Y%H:%M:%S" "one hour ago"}{date_format ""}');
             $tpl->forceCompilation();
-            $this->assertEquals(strftime('%Y%H:%M:%S', $_SERVER['REQUEST_TIME']) . strftime('%Y%H:%M:%S', strtotime('one hour ago')), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
+            $this->assertEquals(PluginDateFormat::strftime('%Y%H:%M:%S', $_SERVER['REQUEST_TIME']) . PluginDateFormat::strftime('%Y%H:%M:%S', strtotime('one hour ago')), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
 
             $tpl = new TemplateString('{date_format "' . date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME'] - 10) . '" "%Y:%H:%M:%S"}');
             $tpl->forceCompilation();
-            $this->assertEquals(strftime('%Y:%H:%M:%S', $_SERVER['REQUEST_TIME'] - 10), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
+            $this->assertEquals(PluginDateFormat::strftime('%Y:%H:%M:%S', $_SERVER['REQUEST_TIME'] - 10), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
 
             $tpl = new TemplateString('{date_format "" "%Y%H:%M:%S" ' . ($_SERVER['REQUEST_TIME'] - 10) . '}');
             $tpl->forceCompilation();
-            $this->assertEquals(strftime('%Y%H:%M:%S', $_SERVER['REQUEST_TIME'] - 10), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
+            $this->assertEquals(PluginDateFormat::strftime('%Y%H:%M:%S', $_SERVER['REQUEST_TIME'] - 10), $this->dwoo->get($tpl, array('foo' => ''), $this->compiler));
         }
 
         public function testDefault()
