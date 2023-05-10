@@ -109,9 +109,9 @@ class PluginFor extends BlockPlugin implements ICompilableBlock, IElseable
         // adds for properties
         if ($usesAny) {
             $out .= "\n" . '$this->globals["for"][' . $name . '] = array' . "\n(";
-            if ($usesIndex) {
-                $out .= "\n\t" . '"index"		=> 0,';
-            }
+//            if ($usesIndex) {
+            $out .= "\n\t" . '"index"		=> 0,';
+//            }
             if ($usesIteration) {
                 $out .= "\n\t" . '"iteration"		=> 1,';
             }
@@ -165,6 +165,8 @@ class PluginFor extends BlockPlugin implements ICompilableBlock, IElseable
         // updates properties
         if ($usesIndex) {
             $out .= "\n\t\t" . '$_for' . $cnt . '_glob["index"] = $this->scope[' . $name . '];';
+        }else{
+            $out .= "\n\t\t" . '$_for' . $cnt . '_glob["index"] = 0;';
         }
         if ($usesFirst) {
             $out .= "\n\t\t" . '$_for' . $cnt . '_glob["first"] = (string) ($_for' . $cnt . '_glob["iteration"] === 1);';
