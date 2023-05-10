@@ -143,9 +143,9 @@ class PluginForeach extends BlockPlugin implements ICompilableBlock, IElseable
         // adds foreach properties
         if ($usesAny) {
             $pre .= "\n" . '$this->globals["foreach"][' . $name . '] = array' . "\n(";
-            if ($usesIndex) {
-                $pre .= "\n\t" . '"index"		=> 0,';
-            }
+//            if ($usesIndex) {
+            $pre .= "\n\t" . '"index"		=> 0,';
+//            }
             if ($usesIteration) {
                 $pre .= "\n\t" . '"iteration"		=> 1,';
             }
