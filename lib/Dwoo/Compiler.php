@@ -955,7 +955,7 @@ class Compiler implements ICompiler
             echo '=============================================================================================' . "\n";
         }
 
-        $this->template = $this->dwoo = null;
+        $this->template = null;
         $tpl = null;
 
         return $output;
